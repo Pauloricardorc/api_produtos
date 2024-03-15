@@ -14,17 +14,64 @@ datasource db {
 }
 
 model Produtos {
-  id        Int      @id @default(autoincrement())
-  nome      String   @unique()
-  descricao String
-  desconto  Float
-  avaliacao Float
-  preco     Float
-  estoque   Int
-  marca     String
-  categoria String
-  preview   String
-  images    String[]
+  id            Int              @id @default(autoincrement())
+  nome          String           @unique()
+  descricao     String
+  marca         String
+  categoria     String
+  preview       String
+  images        String[]
+  Estoque       Estoque[]
+  PrecoDesconto Preco_Desconto[]
+  marcasId      Int
+  categoriasId  Int
+
+  marcas     Marcas     @relation(fields: [marcasId], references: [id])
+  categorias Categorias @relation(fields: [categoriasId], references: [id])
 
   @@map("produtos")
+}
+
+model Categorias {
+  id        Int        @id @default(autoincrement())
+  categoria String
+  Produtos  Produtos[]
+
+  @@map("categoria")
+}
+
+model Marcas {
+  id       Int        @id @default(autoincrement())
+  marca    String
+  Produtos Produtos[]
+
+  @@map("marcas")
+}
+
+model Estoque {
+  id         Int @id @default(autoincrement())
+  quantidade Int
+  produtosId Int
+
+  produtos Produtos @relation(fields: [produtosId], references: [id])
+
+  @@map("estoque")
+}
+
+model Preco_Desconto {
+  id         Int    @id @default(autoincrement())
+  desconto   Float?
+  preco      Float
+  produtosId Int
+
+  produtos Produtos @relation(fields: [produtosId], references: [id])
+
+  @@map("preco_desconto")
+}
+
+model Vendas {
+  id    Int @id @default(autoincrement())
+  venda Int
+
+  @@map("vendas")
 }

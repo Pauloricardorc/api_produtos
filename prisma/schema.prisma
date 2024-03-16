@@ -17,8 +17,6 @@ model Produtos {
   id            Int              @id @default(autoincrement())
   nome          String           @unique()
   descricao     String
-  marca         String
-  categoria     String
   preview       String
   images        String[]
   Estoque       Estoque[]

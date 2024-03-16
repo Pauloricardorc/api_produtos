@@ -7,27 +7,23 @@ export async function createProducts(app: FastifyInstance) {
     const createProductsBody = z.object({
       nome: z.string(),
       descricao: z.string(),
-      desconto: z.number(),
-      avaliacao: z.number(),
-      preco: z.number(),
-      estoque: z.number(),
       marca: z.string(),
       categoria: z.string(),
       preview: z.string(),
       images: z.array(z.string()),
+      marcasId: z.number(),
+      categoriasId: z.number(),
     })
 
     const {
       nome,
       descricao,
-      desconto,
-      avaliacao,
-      preco,
-      estoque,
       marca,
       categoria,
       preview,
       images,
+      marcasId,
+      categoriasId,
     } = await createProductsBody.parse(request.body)
 
     const productAreadyExist = await prisma.produtos.findUnique({
@@ -44,14 +40,12 @@ export async function createProducts(app: FastifyInstance) {
       data: {
         nome,
         descricao,
-        desconto,
-        avaliacao,
-        preco,
-        estoque,
         marca,
         categoria,
         preview,
         images,
+        marcasId,
+        categoriasId,
       },
     })
 

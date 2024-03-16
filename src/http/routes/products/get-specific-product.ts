@@ -16,7 +16,6 @@ export async function getSpecificProduct(app: FastifyInstance) {
           id: Number(productId),
         },
       })
-      console.log(product)
 
       if (!productId) {
         return reply
